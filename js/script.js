@@ -8,7 +8,7 @@ const start_btn = document.querySelector("#start_button");
 const increase_time = document.querySelector("#increase_time");
 const decrease_time = document.querySelector("#decrease_time");
 
-let state = "stopped"; //default: stopped . Addtnl values: paused, started,
+let state = "stopped"; //default: stopped . Addtnl values: started and on_break
 let start_interval;
 
 timer_screen.textContent = "25:15";
@@ -27,6 +27,7 @@ function start_work_timer(){
     let timer_minutes = parseInt(document.querySelector("#timer_screen").textContent.slice(0,2));
     let timer_seconds = parseInt(document.querySelector("#timer_screen").textContent.slice(3,5));
     //full string of timer screen string
+    /*
     console.log("full timer string: " + document.querySelector("#timer_screen").textContent);
     console.log("length of timer string: " + document.querySelector("#timer_screen").textContent.length);
 
@@ -34,12 +35,12 @@ function start_work_timer(){
     console.log("seconds for timer: ", timer_seconds);
 
     console.log('starting timer');
-    //get_time();
+    */
     start_interval = window.setInterval(function(){
-      if(state === "started"); {
+      if(state === "started") {
         //console.log("type of timer_seconds: ", typeof timer_seconds)
         if (timer_seconds == 0 && timer_minutes == 0){
-          start_break_timer();
+          start_break_timer("00", "5", "on_break");
           return;
         }
         else if (timer_seconds == 0){
@@ -63,9 +64,10 @@ function start_work_timer(){
         }
         //console.log(seconds);
         timer_screen.textContent = timer_minutes.toString() + ":" + timer_seconds.toString();
+      } else {
+        return;
       }
     }, 1000);
-
     //start_interval = countdown_timer(timer_seconds, timer_minutes, state);
   }
   return;
@@ -79,29 +81,72 @@ function reset_timers(){
   timer_screen.textContent = "25:00";
 };
 function countdown_timer(timer_seconds, timer_minutes, state) {
-  window.setInterval(function(){
-    if(state === "started"); {
-      //console.log("type of timer_seconds: ", typeof timer_seconds)
-      if (timer_seconds == 0 && timer_minutes == 0){
-        return;
-      }
-      else if (timer_seconds == 0){
-        timer_minutes--;
-        timer_seconds = 59;
-      }
-      else if(timer_seconds <=9) {
-        console.log("when timer seconds is 9 seconds or less, the type of the variable is: ", typeof timer_seconds);
-      }
-      else if (timer_seconds <= 59) {
-        timer_seconds -= 1;
-      }
-      //console.log(seconds);
-      timer_screen.textContent = timer_minutes.toString() + ":" + timer_seconds.toString();
+  console.log("countdown_timer func called");
+  console.log("state is: ", state)
+  console.log("timer_seconds is: ", timer_seconds);
+  console.log("timer_minutes is: ", timer_minutes);
+
+  if(state === "started") {
+    //console.log("type of timer_seconds: ", typeof timer_seconds)
+    if (timer_seconds == 0 && timer_minutes == 0){
+      start_break_timer(timer_seconds, timer_minutes, state);
+      return;
     }
-  }, 1000);
+    else if (timer_seconds == 0){
+      timer_minutes--;
+      timer_seconds = 59;
+    }
+    else if(timer_seconds <= 10) {
+      timer_seconds -= 1;
+      console.log("when timer seconds is 9 seconds or less, the type of the variable is: ", typeof timer_seconds);
+      let tmp = timer_seconds.toString();
+      tmp_array = [];
+      for(let i = 0; i < tmp.length; i++) {
+        tmp_array.push(tmp[i]);
+      }
+      tmp_array.unshift("0");
+      console.log("temp array: ", tmp_array);
+      timer_seconds = tmp_array.join("");
+    }
+    else if (timer_seconds <= 59) {
+      timer_seconds -= 1;
+    }
+    //console.log(seconds);
+    timer_screen.textContent = timer_minutes.toString() + ":" + timer_seconds.toString();
+  }
 };
-function start_break_timer(){
-  console.log("break started.");
+
+function start_break_timer(timer_seconds, timer_minutes, state){
+  console.log("break started. Current seconds: ", timer_seconds, "timer minutes: ", timer_minutes, "state: ", state);
+  document.querySelector("#content").style.backgroundColor = "#FFAB1E";
+  window.clearInterval(start_interval);
+  let rest_screen = document.querySelector("#rest_screen");
+  console.log("first index item in rest screen output: ", rest_screen.textContent.slice(0,1));
+  let break_interval = window.setInterval(function(){
+    if (timer_seconds == 0 && timer_minutes == 0){
+      //start_break_timer(timer_seconds, timer_minutes, state);
+      return;
+    }
+    else if (timer_seconds == 0){
+      timer_minutes--;
+      timer_seconds = 59;
+    }
+    else if(timer_seconds <= 10) {
+      timer_seconds -= 1;
+      let tmp = timer_seconds.toString();
+      tmp_array = [];
+      for(let i = 0; i < tmp.length; i++) {
+        tmp_array.push(tmp[i]);
+      }
+      tmp_array.unshift("0");
+      console.log("temp array: ", tmp_array);
+      timer_seconds = tmp_array.join("");
+    }
+    else if (timer_seconds <= 59) {
+      timer_seconds -= 1;
+    }
+    rest_screen.textContent = timer_minutes.toString() + ":" + timer_seconds.toString();
+  }, 1000);
 }
 //get current time
 function get_time(){
@@ -139,6 +184,31 @@ function increment_time() {
   let current_seconds = timer_screen.textContent.slice(3,5);
   timer_screen.textContent = timer_minutes.toString() + ":" + current_seconds.toString();
 }
+function simple_timer(timer_seconds, timer_minutes, state){
+  console.log("called simple_timer");
+  if (timer_seconds == 0 && timer_minutes == 0){
+    //start_break_timer(timer_seconds, timer_minutes, state);
+    return;
+  }
+  else if (timer_seconds == 0){
+    timer_minutes--;
+    timer_seconds = 59;
+  }
+  else if(timer_seconds <= 10) {
+    timer_seconds -= 1;
+    let tmp = timer_seconds.toString();
+    tmp_array = [];
+    for(let i = 0; i < tmp.length; i++) {
+      tmp_array.push(tmp[i]);
+    }
+    tmp_array.unshift("0");
+    console.log("temp array: ", tmp_array);
+    timer_seconds = tmp_array.join("");
+  }
+  else if (timer_seconds <= 59) {
+    timer_seconds -= 1;
+  }
+};
 //also should have start timer function, pause function and reset function
 //add event listeners
 reset_btn.addEventListener("click", reset_timers);
