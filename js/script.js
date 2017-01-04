@@ -1,4 +1,4 @@
-//
+'use strict';
 
 //create all necessary variables
 const timer_screen = document.querySelector("#timer_screen");
@@ -11,13 +11,13 @@ const decrease_time = document.querySelector("#decrease_time");
 let state = "stopped"; //default: stopped . Addtnl values: started and on_break
 let start_interval;
 
-timer_screen.textContent = "25:15";
+timer_screen.textContent = "25:20";
 rest_screen.textContent = "5:00";
 
 //start working period timer
 function start_work_timer(){
   console.log("start button clicked");
-  if (state !== "started") {
+  if(state !== "started") {
     state = "started";
     //get the current time
     let current_time = new Date();
@@ -31,6 +31,7 @@ function start_work_timer(){
       if(state === "started") {
         if (timer_seconds == 0 && timer_minutes == 0){
           start_break_timer("00", "5", "on_break");
+          state = "on_break";
           return;
         }
         else if (timer_seconds == 0){
@@ -40,7 +41,7 @@ function start_work_timer(){
         else if(timer_seconds <= 10) {
           timer_seconds -= 1;
           let tmp = timer_seconds.toString();
-          tmp_array = [];
+          let tmp_array = [];
           for(let i = 0; i < tmp.length; i++) {
             tmp_array.push(tmp[i]);
           }
@@ -117,7 +118,7 @@ function start_break_timer(timer_seconds, timer_minutes, state){
     else if(timer_seconds <= 10) {
       timer_seconds -= 1;
       let tmp = timer_seconds.toString();
-      tmp_array = [];
+      let tmp_array = [];
       for(let i = 0; i < tmp.length; i++) {
         tmp_array.push(tmp[i]);
       }
