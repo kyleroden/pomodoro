@@ -1,23 +1,32 @@
 #wrapper {
   position: relative;
+  margin: 0 auto;
   height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #0B3954;
 }
 #content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100%;
-  position: relative;
+  height: 90vh;
+  width: 550px;
+  background-color: #FF6663;
+  margin: 0px 0px ;
 }
 #main_header {
-  color: white;
+  color: #FEFFFE;
   font-size: 2.3em;
-  margin-bottom: .3em;
+  margin-top: 0px;
+  text-shadow: 1px 1px 4px #0B3954;
 }
 .screen {
-  background-color: #0059B2;
-  color: white;
+  background-color: #FEFFFE;
+  color: #0B3954;
   font-size: 2.5em;
   display: flex;
   justify-content: center;
@@ -25,9 +34,13 @@
   padding: .4em .6em;
   margin-bottom: .2em;
   min-height: 25px;
+  border-radius: 10px;
 }
 #rest_screen {
   font-size: 1.5em;
+}
+#instructions {
+  color: #0B3954;
 }
 #adjust_timer_container {
   margin-bottom: .5em;
@@ -35,9 +48,15 @@
 .btn {
   width: 150px;
   font-size: 2em;
+  background-color: #FEFFFE;
+  color: #0B3954;
 }
 #adjust_timer_length {
   background-color: yellow;
 }
 #start_button {
+  background-color: #BFD7EA;
+}
+#reset_button {
+  background-color: #BFD7EA;
 }

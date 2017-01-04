@@ -1,5 +1,5 @@
 //
-document.querySelector("#content").style.backgroundColor = "dodgerblue";
+
 //create all necessary variables
 const timer_screen = document.querySelector("#timer_screen");
 const rest_screen = document.querySelector("#rest_screen");
