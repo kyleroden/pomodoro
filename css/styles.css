@@ -43,6 +43,11 @@
 #instructions {
   color: #0B3954;
 }
+#instructions i {
+  padding: 3px 3px;
+  background-color: white;
+  border-radius: 2px;
+}
 #increase_btn {
 
 }
