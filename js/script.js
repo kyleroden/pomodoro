@@ -5,13 +5,13 @@ const timer_screen = document.querySelector("#timer_screen");
 const rest_screen = document.querySelector("#rest_screen");
 const reset_btn = document.querySelector("#reset_button");
 const start_btn = document.querySelector("#start_button");
-const increase_time = document.querySelector("#increase_time");
-const decrease_time = document.querySelector("#decrease_time");
+const increase_time = document.querySelector("#increase_btn");
+const decrease_time = document.querySelector("#decrease_btn");
 
 let state = "stopped"; //default: stopped . Addtnl values: started and on_break
 let start_interval;
 
-timer_screen.textContent = "25:20";
+timer_screen.textContent = "25:00";
 rest_screen.textContent = "5:00";
 
 //start working period timer
@@ -142,27 +142,39 @@ function get_time(){
 }
 //add time to pomodoro session time
 function decrement_time() {
-  let curr_minutes = timer_screen.textContent;
-  if(curr_minutes.length < 5) {
-    let timer_minutes = parseInt(timer_screen.textContent.slice(0,1));
-    timer_minutes -= 1;
-    let current_seconds = timer_screen.textContent.slice(2,4);
-    timer_screen.textContent = timer_minutes.toString() + ":" + current_seconds.toString();
-  }
+  if(state === "started") {
+    console.log("decrement clicked, state is 'started'");
+  return;
+}
   else {
-  //if the length is 5 or greater, than we don't need to add a 0 to the seconds digit
-  let timer_minutes = parseInt(timer_screen.textContent.slice(0,2));
-  timer_minutes -= 1;
-  let current_seconds = timer_screen.textContent.slice(3,5);
-  timer_screen.textContent = timer_minutes.toString() + ":" + current_seconds.toString();
+    let curr_minutes = timer_screen.textContent;
+    if(curr_minutes.length < 5) {
+      let timer_minutes = parseInt(timer_screen.textContent.slice(0,1));
+      timer_minutes -= 1;
+      let current_seconds = timer_screen.textContent.slice(2,4);
+      timer_screen.textContent = timer_minutes.toString() + ":" + current_seconds.toString();
+    }
+    else {
+    //if the length is 5 or greater, than we don't need to add a 0 to the seconds digit
+    let timer_minutes = parseInt(timer_screen.textContent.slice(0,2));
+    timer_minutes -= 1;
+    let current_seconds = timer_screen.textContent.slice(3,5);
+    timer_screen.textContent = timer_minutes.toString() + ":" + current_seconds.toString();
+    }
   }
 }
 
 function increment_time() {
-  let timer_minutes = parseInt(document.querySelector("#timer_screen").textContent.slice(0,2));
-  timer_minutes += 1;
-  let current_seconds = timer_screen.textContent.slice(3,5);
-  timer_screen.textContent = timer_minutes.toString() + ":" + current_seconds.toString();
+  if(state === "started") {
+    console.log("decrement clicked, state is 'started'");
+  return;
+}
+  else {
+    let timer_minutes = parseInt(document.querySelector("#timer_screen").textContent.slice(0,2));
+    timer_minutes += 1;
+    let current_seconds = timer_screen.textContent.slice(3,5);
+    timer_screen.textContent = timer_minutes.toString() + ":" + current_seconds.toString();
+  }
 }
 //this following function is part of my attempt to refactor the main setInterval functions
 function simple_timer(timer_seconds, timer_minutes, state){
