@@ -144,7 +144,8 @@ function get_time(){
 function decrement_time() {
   if(state === "started") {
     console.log("decrement clicked, state is 'started'");
-  return;
+    
+    return;
 }
   else {
     let curr_minutes = timer_screen.textContent;
