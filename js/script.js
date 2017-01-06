@@ -7,6 +7,7 @@ const reset_btn = document.querySelector("#reset_button");
 const start_btn = document.querySelector("#start_button");
 const increase_time = document.querySelector("#increase_btn");
 const decrease_time = document.querySelector("#decrease_btn");
+const instructions = document.querySelector("#instructions");
 
 let state = "stopped"; //default: stopped . Addtnl values: started and on_break
 let start_interval;
@@ -142,9 +143,28 @@ function get_time(){
 }
 //add time to pomodoro session time
 function decrement_time() {
+  //if the user has clicked decrement (or increment) while a timer has already started, notify that a new timer must be started to adjust time
   if(state === "started") {
-    console.log("decrement clicked, state is 'started'");
-    
+    //store the default instructions so we can return the textContent to default instructions after warning
+    let default_instructions = instructions.textContent;
+    //set warning instructions
+    instructions.textContent = "Warning: once started, pomodoro timer cannot be adjusted.";
+    let timeout_id;
+    //reverts instructions to their original state
+    function reset_instructions() {
+      instructions.textContent = default_instructions;
+      clear_warning();
+    }
+    //allows warning to display for 2.5 seconds before reverting instructions to their default value
+    function start_warning() {
+      timeout_id = window.setTimeout(reset_instructions, 2500);
+    }
+    //stops timeout event in window
+    function clear_warning() {
+      window.clearTimeout(timeout_id);
+    }
+    //changes instructions text to warn user that timer can't be adjusted after starting
+    start_warning();
     return;
 }
   else {
@@ -167,7 +187,26 @@ function decrement_time() {
 
 function increment_time() {
   if(state === "started") {
-    console.log("decrement clicked, state is 'started'");
+    //store the default instructions so we can return the textContent to default instructions after warning
+    let default_instructions = instructions.textContent;
+    //set warning instructions
+    instructions.textContent = "Warning: once started, pomodoro timer cannot be adjusted.";
+    let timeout_id;
+    //reverts instructions to their original state
+    function reset_instructions() {
+      instructions.textContent = default_instructions;
+      clear_warning();
+    }
+    //allows warning to display for 2.5 seconds before reverting instructions to their default value
+    function start_warning() {
+      timeout_id = window.setTimeout(reset_instructions, 2500);
+    }
+    //stops timeout event in window
+    function clear_warning() {
+      window.clearTimeout(timeout_id);
+    }
+    //changes instructions text to warn user that timer can't be adjusted after starting
+    start_warning();
   return;
 }
   else {
